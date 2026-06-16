@@ -1,0 +1,14 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="300" viewBox="0 0 1200 300" role="img" aria-label="envguard - Validate your environment variables against a schema">
+  <defs>
+    <linearGradient id="bg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#6B2FB5"/>
+      <stop offset="100%" stop-color="#4A1E86"/>
+    </linearGradient>
+  </defs>
+  <rect width="1200" height="300" fill="url(#bg)"/>
+  <g fill="#ffffff" font-family="Segoe UI, Helvetica, Arial, sans-serif" text-anchor="middle">
+    <text x="600" y="135" font-size="84" font-weight="700" letter-spacing="2">envguard</text>
+    <text x="600" y="190" font-size="30" font-weight="400" opacity="0.95">Validate your environment variables against a schema</text>
+    <text x="600" y="240" font-size="22" font-weight="600" opacity="0.8" letter-spacing="3">Python &#183; CLI &#183; zero dependencies</text>
+  </g>
+</svg>

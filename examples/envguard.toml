@@ -1,0 +1,36 @@
+# Example envguard schema.
+# Each top-level table names an environment variable and declares how it
+# should be validated.
+
+[DATABASE_URL]
+required = true
+type = "url"
+
+[PORT]
+required = true
+type = "int"
+
+[DEBUG]
+type = "bool"
+default = false
+
+[LOG_LEVEL]
+type = "enum"
+values = ["debug", "info", "warning", "error"]
+default = "info"
+
+[ADMIN_EMAIL]
+required = true
+type = "email"
+
+[RELEASE_TAG]
+type = "regex"
+pattern = "v\\d+\\.\\d+\\.\\d+"
+
+[TIMEOUT_SECONDS]
+type = "float"
+default = 30.0
+
+[APP_NAME]
+required = true
+type = "string"
