@@ -22,6 +22,7 @@ to install, audit, or keep up to date.
 - **`.env` file support** via `--env-file`, overlaid by the real process
   environment.
 - **Aligned results table** with `OK` / `MISSING` / `INVALID` rows.
+- **Machine-readable JSON output** via `--format json` for CI consumption.
 - **CI-friendly exit codes**: `0` when everything passes, `1` on any failure.
 - **Zero dependencies**, single small package.
 
@@ -120,6 +121,39 @@ APP_NAME         OK       string
 
 The process exits with status `1` because at least one variable failed,
 making it easy to gate a CI job or a container start-up.
+
+### JSON output
+
+For pipelines that prefer to parse results programmatically, pass
+`--format json` to emit a JSON array on stdout (the exit codes are
+unchanged):
+
+```bash
+envguard --schema envguard.toml --format json
+```
+
+```json
+[
+  {
+    "variable": "DATABASE_URL",
+    "status": "ok",
+    "detail": "url"
+  },
+  {
+    "variable": "ADMIN_EMAIL",
+    "status": "missing",
+    "detail": "required but not set"
+  },
+  {
+    "variable": "RELEASE_TAG",
+    "status": "invalid",
+    "detail": "value '1.4.2' does not match /v\\d+\\.\\d+\\.\\d+/"
+  }
+]
+```
+
+Each entry carries the `variable` name, a lowercase `status` of `ok`,
+`missing`, or `invalid`, and a human-readable `detail`.
 
 ## Schema reference
 
