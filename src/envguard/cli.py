@@ -3,6 +3,7 @@
 from __future__ import annotations
 
 import argparse
+import json
 import os
 import sys
 
@@ -36,6 +37,23 @@ def render_table(results):
     return "\n".join(lines)
 
 
+def render_json(results):
+    """Render the results as a machine-readable JSON array.
+
+    Each entry has ``variable``, ``status`` (lowercased ``ok``/``missing``/
+    ``invalid``) and ``detail``. Suitable for consumption in CI pipelines.
+    """
+    payload = [
+        {
+            "variable": r["variable"],
+            "status": r["status"].lower(),
+            "detail": r["detail"],
+        }
+        for r in results
+    ]
+    return json.dumps(payload, indent=2)
+
+
 def build_parser():
     parser = argparse.ArgumentParser(
         prog="envguard",
@@ -50,6 +68,12 @@ def build_parser():
         "--env-file",
         default=None,
         help="optional .env file to load before reading the process environment",
+    )
+    parser.add_argument(
+        "--format",
+        choices=("table", "json"),
+        default="table",
+        help="output format (default: table)",
     )
     parser.add_argument(
         "--version",
@@ -82,12 +106,15 @@ def main(argv=None):
 
     results = validate_environment(schema, environ)
 
-    print(render_table(results))
-
     failures = [r for r in results if r["status"] in (MISSING, INVALID)]
-    ok_count = sum(1 for r in results if r["status"] == OK)
-    print()
-    print(f"{ok_count} ok, {len(failures)} failed, {len(results)} total")
+
+    if args.format == "json":
+        print(render_json(results))
+    else:
+        print(render_table(results))
+        ok_count = sum(1 for r in results if r["status"] == OK)
+        print()
+        print(f"{ok_count} ok, {len(failures)} failed, {len(results)} total")
 
     return 1 if failures else 0
 
