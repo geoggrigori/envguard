@@ -10,8 +10,6 @@
 <a href="README.es.md"><img src="https://img.shields.io/badge/Español-555555?style=for-the-badge" alt="Español"/></a>
 </div>
 
-![envguard](assets/banner.svg)
-
 [![Python 3.11+](https://img.shields.io/badge/python-3.11%2B-6B2FB5.svg)](https://www.python.org/downloads/)
 [![License: MIT](https://img.shields.io/badge/license-MIT-4A1E86.svg)](LICENSE)
 [![tests](https://img.shields.io/badge/tests-pytest-6B2FB5.svg)](tests/)
