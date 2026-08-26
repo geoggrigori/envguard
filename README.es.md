@@ -10,10 +10,6 @@
 <a href="README.es.md"><img src="https://img.shields.io/badge/Español-1987F0?style=for-the-badge" alt="Español"/></a>
 </div>
 
-<div align="center">
-  <img src="assets/banner.svg" width="100%" alt="envguard"/>
-</div>
-
 <h1 align="center">envguard</h1>
 <p align="center"><em>Herramienta CLI que valida variables de entorno contra un schema declarativo</em></p>
 <p align="center"><strong>envguard.toml → valida .env/entorno → tabla de resultados → exit code para CI</strong></p>
