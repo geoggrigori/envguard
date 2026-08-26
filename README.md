@@ -1,52 +1,73 @@
-![envguard](assets/banner.svg)
+<!-- ══════════════════════════ TÍTULO ══════════════════════════ -->
+<div align="center">
+  <img src="docs/title-banner.svg" width="100%" alt="envguard"/>
+</div>
 
-[![Python 3.11+](https://img.shields.io/badge/python-3.11%2B-6B2FB5.svg)](https://www.python.org/downloads/)
-[![License: MIT](https://img.shields.io/badge/license-MIT-4A1E86.svg)](LICENSE)
-[![tests](https://img.shields.io/badge/tests-pytest-6B2FB5.svg)](tests/)
-[![zero dependencies](https://img.shields.io/badge/dependencies-zero-4A1E86.svg)](pyproject.toml)
+<!-- ══════════════════════ IDIOMAS / LANGUAGES ══════════════════════ -->
+<div align="center">
+<a href="README.md"><img src="https://img.shields.io/badge/Português-1987F0?style=for-the-badge" alt="Português"/></a>
+<a href="README.en.md"><img src="https://img.shields.io/badge/English-555555?style=for-the-badge" alt="English"/></a>
+<a href="README.es.md"><img src="https://img.shields.io/badge/Español-555555?style=for-the-badge" alt="Español"/></a>
+</div>
 
-**envguard** is a tiny command-line tool that validates your environment
-variables against a declarative schema. Point it at an `envguard.toml`, run it
-in your CI pipeline or container entrypoint, and get a clear pass/fail report
-before your application ever starts.
+<div align="center">
+  <img src="assets/banner.svg" width="100%" alt="envguard"/>
+</div>
 
-It is written with the Python standard library only — no third-party packages
-to install, audit, or keep up to date.
+<h1 align="center">envguard</h1>
+<p align="center"><em>Ferramenta CLI que valida variáveis de ambiente contra um schema declarativo</em></p>
+<p align="center"><strong>envguard.toml → valida .env/ambiente → tabela de resultados → exit code pra CI</strong></p>
 
-## Features
+<div align="center">
+<img src="https://img.shields.io/badge/Python_3.11%2B-6B2FB5?style=flat-square&logo=python&logoColor=white" alt="python"/>
+<img src="https://img.shields.io/badge/dependencies-zero-4A1E86?style=flat-square" alt="zero deps"/>
+<img src="https://img.shields.io/badge/tests-pytest-2E7D32?style=flat-square" alt="pytest"/>
+<img src="https://img.shields.io/badge/License-MIT-2E7D32?style=flat-square" alt="license"/>
+</div>
 
-- **Declarative schema** in plain TOML (parsed with stdlib `tomllib`).
-- **Rich type checks**: `string`, `int`, `float`, `bool`, `url`, `email`,
-  `enum`, and `regex`.
-- **Required vs. optional** variables, with **defaults**.
-- **`.env` file support** via `--env-file`, overlaid by the real process
-  environment.
-- **Aligned results table** with `OK` / `MISSING` / `INVALID` rows.
-- **Machine-readable JSON output** via `--format json` for CI consumption.
-- **CI-friendly exit codes**: `0` when everything passes, `1` on any failure.
-- **Zero dependencies**, single small package.
+<div align="center">
+<a href="#sobre"><img src="https://img.shields.io/badge/▸_SOBRE-1987F0?style=for-the-badge" alt="sobre"/></a>
+<a href="#como-funciona"><img src="https://img.shields.io/badge/▸_COMO_FUNCIONA-000000?style=for-the-badge" alt="funciona"/></a>
+<a href="#uso"><img src="https://img.shields.io/badge/▸_USO-1987F0?style=for-the-badge" alt="uso"/></a>
+<a href="#schema"><img src="https://img.shields.io/badge/▸_SCHEMA-000000?style=for-the-badge" alt="schema"/></a>
+</div>
 
-## How it works
+<br/>
+
+> 🐍 **Só standard library.** Zero dependências de terceiros pra instalar, auditar ou manter atualizadas.
+
+## Sobre
+
+**envguard** é uma ferramenta de linha de comando que valida suas variáveis de ambiente contra um schema declarativo. Aponte pra um `envguard.toml`, rode no seu pipeline de CI ou entrypoint do container, e receba um relatório claro de pass/fail antes da sua aplicação sequer iniciar.
+
+**Destaques:**
+- **Schema declarativo** em TOML puro (parseado com `tomllib` da stdlib).
+- **Checagens de tipo ricas**: `string`, `int`, `float`, `bool`, `url`, `email`, `enum`, `regex`.
+- Variáveis **obrigatórias vs. opcionais**, com **defaults**.
+- Suporte a arquivo **`.env`** via `--env-file`, sobreposto pelo ambiente real do processo.
+- **Tabela de resultados** alinhada com linhas `OK`/`MISSING`/`INVALID`.
+- **Saída JSON** via `--format json` pra consumo por CI.
+- **Exit codes CI-friendly**: `0` quando tudo passa, `1` em qualquer falha.
+
+## Como Funciona
 
 ```mermaid
 flowchart TD
-    A[Load schema<br/>envguard.toml] --> B[Read environment<br/>.env file + process env]
-    B --> C{Validate each<br/>variable}
-    C -->|present & valid| D[OK]
-    C -->|required & absent| E[MISSING]
-    C -->|present & wrong| F[INVALID]
-    C -->|absent with default| D
-    D --> G[Print results table]
+    A[Carrega schema<br/>envguard.toml] --> B[Lê ambiente<br/>arquivo .env + ambiente do processo]
+    B --> C{Valida cada<br/>variável}
+    C -->|presente e válida| D[OK]
+    C -->|obrigatória e ausente| E[MISSING]
+    C -->|presente e errada| F[INVALID]
+    C -->|ausente com default| D
+    D --> G[Imprime tabela de resultados]
     E --> G
     F --> G
-    G --> H{Any failures?}
-    H -->|no| I[Exit 0]
-    H -->|yes| J[Exit 1]
+    G --> H{Alguma falha?}
+    H -->|não| I[Exit 0]
+    H -->|sim| J[Exit 1]
 ```
 
-## Installation
-
-From source (recommended while it is unpublished):
+## Uso
 
 ```bash
 git clone https://github.com/geoggrigori/envguard.git
@@ -54,15 +75,7 @@ cd envguard
 pip install .
 ```
 
-Or for local development, editable with test extras:
-
-```bash
-pip install -e ".[dev]"
-```
-
-## Usage
-
-Write a schema describing the variables your app expects:
+Escreva um schema descrevendo as variáveis que sua app espera:
 
 ```toml
 # envguard.toml
@@ -78,116 +91,48 @@ type = "int"
 type = "enum"
 values = ["debug", "info", "warning", "error"]
 default = "info"
-
-[ADMIN_EMAIL]
-required = true
-type = "email"
 ```
-
-Run the validator against the current environment:
 
 ```bash
 envguard --schema envguard.toml
-```
-
-Or validate a `.env` file (process environment still takes precedence):
-
-```bash
 envguard --schema envguard.toml --env-file .env
+envguard --schema envguard.toml --format json
 ```
 
-A complete example schema and `.env` live in [`examples/`](examples/):
-
-```bash
-envguard --schema examples/envguard.toml --env-file examples/.env
-```
-
-### Sample output
-
+**Saída de exemplo:**
 ```text
 VARIABLE         STATUS   DETAIL
 ---------------  -------  ----------------------------
 DATABASE_URL     OK       url
 PORT             OK       int
-DEBUG            OK       default applied ('false')
-LOG_LEVEL        OK       one of ['debug', 'info', 'warning', 'error']
 ADMIN_EMAIL      MISSING  required but not set
 RELEASE_TAG      INVALID  value '1.4.2' does not match /v\d+\.\d+\.\d+/
-TIMEOUT_SECONDS  OK       default applied ('30.0')
-APP_NAME         OK       string
 
 6 ok, 2 failed, 8 total
 ```
 
-The process exits with status `1` because at least one variable failed,
-making it easy to gate a CI job or a container start-up.
+## Schema
 
-### JSON output
+| Campo | Significado |
+|---|---|
+| `required` | `true` se a variável deve estar presente (padrão `false`) |
+| `type` | `string`, `int`, `float`, `bool`, `url`, `email`, `enum`, `regex` (padrão `string`) |
+| `values` | Lista de valores permitidos; obrigatório quando `type = "enum"` |
+| `pattern` | Regex que o valor deve casar; obrigatório quando `type = "regex"` |
+| `default` | Valor usado quando a variável está ausente; reportado como `OK` |
 
-For pipelines that prefer to parse results programmatically, pass
-`--format json` to emit a JSON array on stdout (the exit codes are
-unchanged):
-
-```bash
-envguard --schema envguard.toml --format json
-```
-
-```json
-[
-  {
-    "variable": "DATABASE_URL",
-    "status": "ok",
-    "detail": "url"
-  },
-  {
-    "variable": "ADMIN_EMAIL",
-    "status": "missing",
-    "detail": "required but not set"
-  },
-  {
-    "variable": "RELEASE_TAG",
-    "status": "invalid",
-    "detail": "value '1.4.2' does not match /v\\d+\\.\\d+\\.\\d+/"
-  }
-]
-```
-
-Each entry carries the `variable` name, a lowercase `status` of `ok`,
-`missing`, or `invalid`, and a human-readable `detail`.
-
-## Schema reference
-
-Each top-level table names an environment variable. The following fields are
-supported:
-
-| Field      | Meaning                                                                 |
-|------------|-------------------------------------------------------------------------|
-| `required` | `true` if the variable must be present (default `false`).               |
-| `type`     | One of `string`, `int`, `float`, `bool`, `url`, `email`, `enum`, `regex` (default `string`). |
-| `values`   | List of allowed values; required when `type = "enum"`.                  |
-| `pattern`  | Regular expression the value must fully match; required when `type = "regex"`. |
-| `default`  | Value used when the variable is absent; the result is reported as `OK`. |
-
-Type details:
-
-| Type     | Accepts                                                              |
-|----------|---------------------------------------------------------------------|
-| `string` | Any value (presence only).                                          |
-| `int`    | A whole number, e.g. `8080`, `-3`.                                  |
-| `float`  | A decimal number, e.g. `30.0`, `1e3`.                               |
-| `bool`   | `1`/`0`, `true`/`false`, `yes`/`no`, `on`/`off` (case-insensitive). |
-| `url`    | `http`, `https`, or `ftp` URL with a host.                          |
-| `email`  | `local@domain.tld`.                                                 |
-| `enum`   | A member of `values`.                                               |
-| `regex`  | A full match of `pattern`.                                          |
-
-## Running tests
-
+**Testes:**
 ```bash
 pip install -e ".[dev]"
 python -m pytest
 ```
 
-## License
+## Licença
 
-Released under the [MIT License](LICENSE). Copyright (c) 2026 Geovana Grigorio.
+[MIT](LICENSE).
+
+<div align="center">
+  <img src="https://file.loading.io/color/feature/thumb/Blues-8.png?" width="100%" height="10px" alt="divider"/>
+</div>
+
+<p align="center"><sub>Desenvolvido por <strong><a href="https://github.com/geoggrigori">Grigori</a></strong> · 2026</sub></p>
