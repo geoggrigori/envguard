@@ -14,10 +14,6 @@
 
 <br/>
 
-<h1 align="center">envguard</h1>
-<p align="center"><em>Ferramenta CLI que valida variáveis de ambiente contra um schema declarativo</em></p>
-<p align="center"><strong>envguard.toml → valida .env/ambiente → tabela de resultados → exit code pra CI</strong></p>
-
 <div align="center">
 <img src="https://img.shields.io/badge/Python_3.11%2B-6B2FB5?style=flat-square&logo=python&logoColor=white" alt="python"/>
 <img src="https://img.shields.io/badge/dependencies-zero-4A1E86?style=flat-square" alt="zero deps"/>
