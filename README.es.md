@@ -3,12 +3,16 @@
   <img src="docs/title-banner.svg" width="100%" alt="envguard"/>
 </div>
 
+<br/>
+
 <!-- ══════════════════════ IDIOMAS / LANGUAGES ══════════════════════ -->
 <div align="center">
 <a href="README.md"><img src="https://img.shields.io/badge/Português-555555?style=for-the-badge" alt="Português"/></a>
 <a href="README.en.md"><img src="https://img.shields.io/badge/English-555555?style=for-the-badge" alt="English"/></a>
 <a href="README.es.md"><img src="https://img.shields.io/badge/Español-1987F0?style=for-the-badge" alt="Español"/></a>
 </div>
+
+<br/>
 
 <h1 align="center">envguard</h1>
 <p align="center"><em>Herramienta CLI que valida variables de entorno contra un schema declarativo</em></p>
